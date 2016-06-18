@@ -7,19 +7,19 @@ function G = mgage(thr, typ)
 	%%     G = mgage(thr, "cplug")
 	%%
 	%% Выходные параметры:
-	%%     G - структура, содержащая поля-размеры рассчитываемого калибра:
-	%%         G.d, G.D   - наружный диаметр
-	%%         G.d2, G.D2 - средний диаметр
-	%%         G.d1, G.D1 - внутренний диаметр
+	%%     G - структура, содержащая поля-размеры рассчитываемого калибра (для ПР и НЕ):
+	%%         G.d, G.D   - наружный диаметр, мм
+	%%         G.d2, G.D2 - средний диаметр, мм
+	%%         G.d1, G.D1 - внутренний диаметр, мм
 	%%
 	%% Входные параметры:
 	%%     thr - структура, содержащая поля-параметры контролируемой резьбы:
-	%%         thr.P              - паг и ход контролируемой
-	%%         thr.d, thr.D       - номинальный наружный диаметр
-	%%         thr.Td2, thr.TD2   - допуски среднего диаметра
-	%%         thr.esd, thr.EID   - основное отклонение наружного диаметра
-	%%         thr.esd2, thr.EID2 - основное отклонение среднего диаметра
-	%%         thr.esd1, thr.EID1 - основное отклонение внутреннего диаметра
+	%%         thr.P              - паг и ход контролируемой, мм
+	%%         thr.d, thr.D       - номинальный наружный диаметр, мм
+	%%         thr.Td2, thr.TD2   - допуски среднего диаметра, мм
+	%%         thr.esd, thr.EID   - основное отклонение наружного диаметра, мм
+	%%         thr.esd2, thr.EID2 - основное отклонение среднего диаметра, мм
+	%%         thr.esd1, thr.EID1 - основное отклонение внутреннего диаметра, мм
 	%%
 	%% Использованные нормативные документы:
 	%%     ГОСТ 24705-81 ОНВ. Резьба метрическая. Основные размеры
@@ -93,13 +93,13 @@ function res = ringGO(thr, gtol)
 end
 
 function res = ringNG(thr, gtol, F1)
-	res.D = thr.D + thr.esd + gtol.T_PL/2 + thr.H/12;
+	res.D = thr.d + thr.esd + gtol.T_PL/2 + thr.H/12;
 	res.D = res.D + [0 inf];
 
-	res.D2 = thr.d2 + thr.esd2 - thr.Td2 + gtol.T_R/2;
+	res.D2 = thr.d2 + thr.esd2 - thr.Td2 - gtol.T_R/2;
 	res.D2 = res.D2 + gtol.T_R/2*[-1 1];
 
-	res.D1 = thr.d2 + thr.esd2 - gtol.T_R/2 - 2*F1;
+	res.D1 = thr.d2 + thr.esd2 - thr.Td2 - gtol.T_R/2 - 2*F1;
 	res.D1 = res.D1 + gtol.T_R*[-1 1];
 end
 
@@ -109,7 +109,7 @@ function res = cplugGO(thr, gtol, F1)
 	res.d = res.d + gtol.T_PL*[-1 1];
 
 	res.d2 = thr.d2 + thr.esd2 - gtol.Z_R + gtol.W_GO_R;
-	res.d2 = res.d2 + gtol.T_PL/2*[-1 1];
+	res.d2 = res.d2 + gtol.T_CP/2*[-1 1];
 
 	res.d1 = thr.d1 + thr.esd1 - gtol.T_R/2 - thr.H/6;
 	res.d1 = res.d1 + [-inf 0];
@@ -117,7 +117,7 @@ end
 
 function res = cplugNG(thr, gtol)
 	%% Расчёт калибра-пробки для контроля износа НЕпроходных калибров-колец
-	res.d = thr.d + thr.esd - thr.Td2 - gtol.T_R/2 + gtol.W_NG_R
+	res.d = thr.d + thr.esd - thr.Td2 - gtol.T_R/2 + gtol.W_NG_R;
 	res.d = res.d + gtol.T_PL*[-1 1];
 
 	res.d2 = thr.d2 + thr.esd2 - thr.Td2 + gtol.W_NG_R;
