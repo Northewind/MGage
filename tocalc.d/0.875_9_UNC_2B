@@ -1,0 +1,24 @@
+#!/usr/bin/octave-cli -q
+
+% Test with 7/8"-9 UNC-2B
+
+thr.P = 25.4/9;
+thr.D = 7/8*25.4;
+thr.TD2 = 0.0082*25.4;
+
+% Main deviation calculating (EID, EID2, EID1)
+thr.lim.D = [0.875 inf]*25.4;
+thr.lim.D2 = [0.8028 0.811]*25.4;
+thr.lim.D1 = [0.755 0.778]*25.4;
+md = main_devi(thr, "internal");
+thr.EID = md.EID;
+thr.EID2 = md.EID2;
+thr.EID1 = md.EID1;
+printf(strcat("Main deviations:\n",
+       "\tEID = %g\n",
+	   "\tEID2 = %g\n",
+	   "\tEID1 = %g\n\n"), thr.EID, thr.EID2, thr.EID1);
+
+disp("Plug for 7/8\"-9-UNC-2B")
+mgage(thr, "plug")
+

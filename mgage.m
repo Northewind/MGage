@@ -52,9 +52,8 @@ function G = mgage(thr, typ)
 		G.ng = cplugNG(thr, gtol);
 	otherwise
 		error("Неизвестный тип объекта");
-	endswitch
-
-endfunction
+	end
+end
 
 
 function res = plugGO(thr, gtol)
