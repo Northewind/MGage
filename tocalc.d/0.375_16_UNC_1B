@@ -1,0 +1,24 @@
+#!/usr/bin/octave-cli -q
+
+% Test with 3/8"-16 UNC-1B
+
+thr.P = 25.4/16;
+thr.D = 3/8*25.4;
+thr.TD2 = 0.0085*25.4;
+
+% Main deviation calculating (EID, EID2, EID1)
+thr.lim.D = [0.375 inf]*25.4;
+thr.lim.D2 = [0.3344 0.3429]*25.4;
+thr.lim.D1 = [0.307 0.321]*25.4;
+md = main_devi(thr, "internal");
+thr.EID = md.EID;
+thr.EID2 = md.EID2;
+thr.EID1 = md.EID1;
+printf(strcat("Main deviations:\n",
+       "\tEID = %g\n",
+	   "\tEID2 = %g\n",
+	   "\tEID1 = %g\n\n"), thr.EID, thr.EID2, thr.EID1);
+
+disp("Plug for 3/8\"-16-UNC-1B")
+mgage(thr, "plug")
+

@@ -51,11 +51,12 @@ function G = mgage(thr, typ)
 		G.go = cplugGO(thr, gtol, F1);
 		G.ng = cplugNG(thr, gtol);
 	otherwise
-		error("Неизвестный тип объекта");
+		error(["Unknown object type: ", typ]);
 	end
 end
 
 
+% Обозначение в табл. 10 ГОСТ 24997:  ПР (21)
 function res = plugGO(thr, gtol)
 	res.d = thr.D + thr.EID + gtol.Z_PL;
 	res.d = res.d + gtol.T_PL*[-1 1];
@@ -68,6 +69,7 @@ function res = plugGO(thr, gtol)
 	res.d1 = res.d1 + [-inf 0];
 end
 
+% Обозначение в табл. 10 ГОСТ 24997:  НЕ (22)
 function res = plugNG(thr, gtol, F1)
 	res.d = thr.D2 + thr.EID2 + thr.TD2 + gtol.T_PL/2 + 2*F1;
 	res.d = res.d + gtol.T_PL*[-1 1];
@@ -80,6 +82,7 @@ function res = plugNG(thr, gtol, F1)
 	res.d1 = res.d1 + [-inf 0];
 end
 
+% Обозначение в табл. 10 ГОСТ 24997:  ПР (1)
 function res = ringGO(thr, gtol)
 	res.D = thr.d + thr.esd + gtol.T_PL + thr.H/12;
 	res.D = res.D + [0 inf];
@@ -91,6 +94,7 @@ function res = ringGO(thr, gtol)
 	res.D1 = res.D1 + gtol.T_R/2*[-1 1];
 end
 
+% Обозначение в табл. 10 ГОСТ 24997:  НЕ (11)
 function res = ringNG(thr, gtol, F1)
 	res.D = thr.d + thr.esd + gtol.T_PL/2 + thr.H/12;
 	res.D = res.D + [0 inf];
@@ -102,6 +106,7 @@ function res = ringNG(thr, gtol, F1)
 	res.D1 = res.D1 + gtol.T_R*[-1 1];
 end
 
+% Обозначение в табл. 10 ГОСТ 24997:  КИ (6)
 function res = cplugGO(thr, gtol, F1)
 	%% Расчёт калибра-пробки для контроля износа проходных калибров-колец
 	res.d = thr.d2 + thr.esd2 - gtol.Z_R + gtol.W_GO_R + 2*F1;
@@ -114,6 +119,7 @@ function res = cplugGO(thr, gtol, F1)
 	res.d1 = res.d1 + [-inf 0];
 end
 
+% Обозначение в табл. 10 ГОСТ 24997:  КИ-НЕ (16)
 function res = cplugNG(thr, gtol)
 	%% Расчёт калибра-пробки для контроля износа НЕпроходных калибров-колец
 	res.d = thr.d + thr.esd - thr.Td2 - gtol.T_R/2 + gtol.W_NG_R;
