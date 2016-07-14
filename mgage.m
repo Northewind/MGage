@@ -11,6 +11,8 @@ function G = mgage(thr, typ)
 	%%         G.d, G.D   - наружный диаметр, мм
 	%%         G.d2, G.D2 - средний диаметр, мм
 	%%         G.d1, G.D1 - внутренний диаметр, мм
+	%%         G.d2_wearlim,
+	%%         G.D2_wearlim - предельные значения среднего диаметра с учётом износа, мм
 	%%
 	%% Входные параметры:
 	%%     thr - структура, содержащая поля-параметры контролируемой резьбы:
@@ -51,7 +53,7 @@ function G = mgage(thr, typ)
 		G.go = cplugGO(thr, gtol, F1);
 		G.ng = cplugNG(thr, gtol);
 	otherwise
-		error(["Unknown object type: ", typ]);
+		error(["mgage: unknown object type: ", typ]);
 	end
 end
 
@@ -88,6 +90,7 @@ function res = ringGO(thr, gtol)
 	res.D = res.D + [0 inf];
 
 	res.D2 = thr.d2 + thr.esd2 - gtol.Z_R;
+	res.D2_wearlim = res.D2 + gtol.W_GO_R;
 	res.D2 = res.D2 + gtol.T_R/2*[-1 1];
 
 	res.D1 = thr.d1 + thr.esd1;
@@ -100,6 +103,7 @@ function res = ringNG(thr, gtol, F1)
 	res.D = res.D + [0 inf];
 
 	res.D2 = thr.d2 + thr.esd2 - thr.Td2 - gtol.T_R/2;
+	res.D2_wearlim = res.D2 + gtol.W_NG_R;
 	res.D2 = res.D2 + gtol.T_R/2*[-1 1];
 
 	res.D1 = thr.d2 + thr.esd2 - thr.Td2 - gtol.T_R/2 - 2*F1;
