@@ -7,20 +7,23 @@ thr.D = 16;
 thr.TD2 = 212/1000;
 thr.EID = thr.EID2 = thr.EID1 = 0;
 
-disp("Plug for M16-6H")
-mgage(thr, "plug")
+g = mgage(thr, "plug");
+print_gage(g, thr.P, thr.D, "plug");
 
 
 
 % Test with M16-6g
 
-clear thr
+clear thr g
 thr.P = 2;
 thr.d = 16;
 thr.Td2 = 160/1000;
 thr.esd = thr.esd2 = thr.esd1 = -38/1000;
 
-disp("Ring for M16-6g")
-mgage(thr, "ring")
-disp("CPlug for M16-6g")
-mgage(thr, "cplug")
+g = mgage(thr, "ring");
+print_gage(g, thr.P, thr.d, "ring");
+
+clear g;
+g = mgage(thr, "cplug");
+print_gage(g, thr.P, thr.d, "cplug");
+
