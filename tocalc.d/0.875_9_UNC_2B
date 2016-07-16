@@ -1,24 +1,29 @@
 #!/usr/bin/octave-cli -q
 
-% Test with 7/8"-9 UNC-2B
+%   Пример расчёта калибров-пробок для резьбы 7/8"-9 UNC-2B
+%   Необходимые для расчёта параметры резьбы:
+%     шаг резьбы: 25.4/9 = 2.8222 мм;
+%     номинальный наружный диаметр резьбы: 7/8*25.4 = 22.225 мм;
+%     наружный диаметр резьбы (из стандарта): [22.225 inf] мм;
+%     средний диаметр резьбы (из стандарта): [20.391 20.599] мм;
+%     внутренний диаметр резьбы (из стандарта): [19.177 19.761] мм;
+%     тип калибра - "plug", т.к. резьба внутренняя.
+% 
 
-thr.P = 25.4/9;
-thr.D = 7/8*25.4;
-thr.TD2 = 0.0082*25.4;
+easy_mgage(2.8222, 22.225, [22.225 inf], [20.391 20.599], [19.177 19.761], "plug");
 
-% Main deviation calculating (EID, EID2, EID1)
-thr.lim.D = [0.875 inf]*25.4;
-thr.lim.D2 = [0.8028 0.811]*25.4;
-thr.lim.D1 = [0.755 0.778]*25.4;
-md = main_devi(thr, "internal");
-thr.EID = md.EID;
-thr.EID2 = md.EID2;
-thr.EID1 = md.EID1;
-printf(strcat("Main deviations:\n",
-       "\tEID = %g\n",
-	   "\tEID2 = %g\n",
-	   "\tEID1 = %g\n\n"), thr.EID, thr.EID2, thr.EID1);
-
-disp("Plug for 7/8\"-9-UNC-2B")
-mgage(thr, "plug")
+% На выходе получаем:
+%
+% Plug-Go for thread 22.225x2.8222:
+%     major diameter (d):  22.227...22.255
+%     major diameter wear limit: 22.22
+%     pitch diameter (d2): 20.4...20.414
+%     pitch diameter wear limit: 20.386
+%     minor diameter (d1): -Inf...18.7697
+% Plug-NoGo for thread 22.225x2.8222
+%     major diameter (d):  21.1564...21.1844
+%     pitch diameter (d2): 20.599...20.613
+%     pitch diameter wear limit: 20.591
+%     minor diameter (d1): -Inf...18.7697
+%
 

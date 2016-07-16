@@ -1,0 +1,9 @@
+#!/usr/bin/octave-cli -q
+
+% Test with M20-6H
+
+easy_mgage(p=2.5, d=20, ...
+	d_vec=20+[0 inf], ...
+	d2_vec=18.376+[0 0.224], ...
+	d1_vec=17.294+[0 0.45], "plug");
+
