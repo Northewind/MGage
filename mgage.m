@@ -62,6 +62,7 @@ end
 % Обозначение в табл. 10 ГОСТ 24997:  ПР (21)
 function res = plugGO(thr, gtol)
 	res.d = thr.D + thr.EID + gtol.Z_PL;
+	res.d_wearlim = res.d - gtol.W_GO_PL;
 	res.d = res.d + gtol.T_PL*[-1 1];
 
 	res.d2 = thr.D2 + thr.EID2 + gtol.Z_PL;
@@ -95,6 +96,7 @@ function res = ringGO(thr, gtol)
 	res.D2 = res.D2 + gtol.T_R/2*[-1 1];
 
 	res.D1 = thr.d1 + thr.esd1;
+	res.D1_wearlim = res.D1 + gtol.W_GO_R;
 	res.D1 = res.D1 + gtol.T_R/2*[-1 1];
 end
 
@@ -130,7 +132,7 @@ function res = cplugNG(thr, gtol)
 	res.d = thr.d + thr.esd - thr.Td2 - gtol.T_R/2 + gtol.W_NG_R;
 	res.d = res.d + gtol.T_PL*[-1 1];
 
-	res.d2 = thr.d2 + thr.esd2 - thr.Td2 + gtol.W_NG_R;
+	res.d2 = thr.d2 + thr.esd2 - thr.Td2 - gtol.T_R/2 + gtol.W_NG_R;
 	res.d2 = res.d2 + gtol.T_CP/2*[-1 1];
 
 	res.d1 = thr.d1 + thr.esd1 - thr.Td2 - thr.H/6;

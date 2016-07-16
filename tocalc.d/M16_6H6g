@@ -11,7 +11,6 @@ g = mgage(thr, "plug");
 print_gage(g, thr.P, thr.D, "plug");
 
 
-
 % Test with M16-6g
 
 clear thr g

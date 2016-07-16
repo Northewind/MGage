@@ -22,6 +22,7 @@ function print_gage(g, p, d, typ)
 	case "plug"
 		printf("Plug-Go for thread %gx%g:\n", d, p);
 		printf("    major diameter (d):  %g...%g\n", min(g.go.d), max(g.go.d));
+		printf("    major diameter wear limit: %g\n", g.go.d_wearlim);
 		printf("    pitch diameter (d2): %g...%g\n", min(g.go.d2), max(g.go.d2));
 		printf("    pitch diameter wear limit: %g\n", g.go.d2_wearlim);
 		printf("    minor diameter (d1): %g...%g\n", min(g.go.d1), max(g.go.d1));
@@ -36,6 +37,7 @@ function print_gage(g, p, d, typ)
 		printf("    pitch diameter (D2): %g...%g\n", min(g.go.D2), max(g.go.D2));
 		printf("    pitch diameter wear limit: %g\n", g.go.D2_wearlim);
 		printf("    minor diameter (D1): %g...%g\n", min(g.go.D1), max(g.go.D1));
+		printf("    minor diameter wear limit: %g\n", g.go.D1_wearlim);
 		printf("Ring-NoGo for thread %gx%g\n", d, p);
 		printf("    major diameter (D):  %g...%g\n", min(g.ng.D), max(g.ng.D));
 		printf("    pitch diameter (D2): %g...%g\n", min(g.ng.D2), max(g.ng.D2));
